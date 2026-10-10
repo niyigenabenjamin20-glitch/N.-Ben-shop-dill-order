@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N.Ben Dealer Shop</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+        body { background-color: #f8fafc; color: #0f172a; padding-bottom: 80px; }
+        
+        header { 
+            background: white; 
+            padding: 15px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #e2e8f0; 
+        }
+        header .logo { font-weight: bold; font-size: 1.3rem; color: #2563eb; cursor: pointer; }
+        header .nav-right { display: flex; gap: 8px; }
+        header button { border: none; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .ceo-nav-btn { background: #8b5cf6; color: white; }
+        .settings-nav-btn { background: #64748b; color: white; display: none; }
+
+        .container { max-width: 450px; margin: 15px auto; padding: 0 10px; }
+        
+        /* MAIN PANEL SCREEN */
+        .panel-view { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .panel-header { text-align: center; margin-bottom: 20px; font-size: 1.1rem; }
+        .menu-list { display: flex; flex-direction: column; gap: 10px; }
+        .menu-item { display: flex; align-items: center; gap: 15px; background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px 15px; border-radius: 8px; font-weight: 500; cursor: pointer; }
+        .seller-btn { border: 2px solid #2563eb; background: #eff6ff; font-weight: bold; }
+        .menu-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .logout-btn { background: #fee2e2; color: #ef4444; border: 1px solid #fca5a5; justify-content: center; font-weight: bold; }
+
+        /* CEO & LOGIN VIEWS */
+        .login-view { display: none; background: white; padding: 30px 20px; border-radius: 12px; text-align: center; margin-top: 20px; }
+        .pin-input { width: 100%; padding: 12px; font-size: 1.5rem; text-align: center; letter-spacing: 10px; border: 2px solid #cbd5e1; border-radius: 8px; margin-bottom: 15px; }
+        .submit-btn { width: 100%; background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; }
+
+        /* PRODUCTS SCREEN */
+        .products-view { display: none; background: white; padding: 20px; border-radius: 12px; }
+        .back-btn { background: #e2e8f0; border: none; padding: 8px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; margin-bottom: 15px; }
+        .product-card { display: flex; align-items: center; gap: 15px; border-bottom: 1px solid #e2e8f0; padding: 12px 0; }
+        .prod-icon { font-size: 2rem; background: #f1f5f9; padding: 8px; border-radius: 8px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+        .prod-details { flex: 1; }
+        .prod-name { font-weight: bold; }
+        .prod-price { color: #2563eb; font-weight: bold; margin-top: 2px; }
+        .whatsapp-btn { background: #25d366; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; text-decoration: none; font-size: 0.9rem; }
+
+        /* WEB SETTINGS SCREEN (MAINTENANCE MANAGER) */
+        .settings-view { display: none; background: white; padding: 20px; border-radius: 12px; }
+        .settings-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9rem; }
+        .settings-table th, .settings-table td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; }
+        .settings-table th { background: #f1f5f9; }
+        .settings-input { width: 100%; padding: 4px; border: 1px solid #cbd5e1; border-radius: 4px; }
+        .add-btn { background: #2563eb; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; margin-top: 15px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo" onclick="gendaKuriHome()">N.Ben Dealer Shop</div>
+        <div class="nav-right">
+            <button id="nav-settings-btn" class="settings-nav-btn" onclick="funguraWebSettings()">⚙️ Web Settings</button>
+            <button id="nav-ceo-btn" class="ceo-nav-btn" onclick="funguraCeoLogin()">CEO Login</button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- 1. HOME: MAIN DEALER PANEL -->
+        <div id="dealer-screen" class="panel-view" style="display: block;">
+            <div class="panel-header">👋 Good morning, <strong>Ben. brown</strong></div>
+            <div class="menu-list">
+                <div class="menu-item" onclick="funguraPaji('all')">🛒 Start Order / Products</div>
+                <div class="menu-item" onclick="alert('Draft Orders')">📂 Draft Orders</div>
+                <div class="menu-item" onclick="alert('Verify Orders')">✅ Verify Orders</div>
+                <div class="menu-item seller-btn" onclick="funguraPaji('seller')">🏬 Seller Section (Car, Moto, Bike)</div>
+                <div class="menu-item" onclick="alert('Manage Orders')">🗂️ Manage Orders</div>
+                <div class="menu-row">
+                    <div class="menu-item" onclick="alert('Purchases')">📥 Purchases</div>
+                    <div class="menu-item" onclick="alert('Attendance')">🕒 Attendance</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. CEO PANEL -->
+        <div id="ceo-screen" class="panel-view">
+            <div class="panel-header" style="color: #8b5cf6;">👑 <strong>CEO MANAGER PANEL</strong></div>
+            <div class="menu-list">
+                <div class="menu-item" style="border:2px solid #8b5cf6;" onclick="funguraWebSettings()">⚙️ Open Web Settings (Manage Prices)</div>
+                <div class="menu-item" onclick="alert('Revenues: 2,500,000 RWF')">💰 Total Sales & Revenues</div>
+                <div class="menu-item" onclick="funguraPaji('all')">🛒 View All Products Front</div>
+                <div class="menu-item logout-btn" onclick="logoutCeo()">🚪 Logout CEO</div>
+            </div>
+        </div>
+
+        <!-- 3. CEO LOGIN -->
+        <div id="login-screen" class="login-view">
+            <h2>👑 Ingiza PIN ya CEO</h2>
+            <input type="password" id="pin-field" class="pin-input" placeholder="••••" maxlength="4" inputmode="numeric">
+            <button class="submit-btn" style="background:#8b5cf6;" onclick="verifyCeoPin()">Kwinjira</button>
+            <button class="submit-btn" style="background:#64748b; margin-top:8px;" onclick="gendaKuriHome()">Subira Inyuma</button>
+            <div id="error-message" style="color:red; margin-top:10px; display:none;">⚠️ PIN si yo!</div>
+        </div>
+
+        <!-- 4. PRODUCTS FRONT VIEW -->
+        <div id="products-screen" class="products-view">
+            <button class="back-btn" onclick="subiraInyuma()">⬅️ Subira Inyuma</button>
+            <h3 id="paji-title" style="margin-bottom: 15px;">Ibicuruzwa</h3>
+            <div id="products-container"></div>
+        </div>
+
+        <!-- 5. WEB SETTINGS PANEL (MANAGEMENT) -->
+        <div id="settings-screen" class="settings-view">
+            <button class="back-btn" onclick="subiraInyuma()">⬅️ Subira Inyuma</button>
+            <h3>⚙️ Web Settings (Hindura Ibiciro)</h3>
+            <p style="font-size:0.8rem; color:#64748b; margin-top:4px;">Hindura text hano hasi uhite uvugurura website ako kanya.</p>
+            
+            <table class="settings-table">
+                <thead>
+                    <tr>
+                        <th>Izina</th>
+                        <th>Igiciro</th>
+                        <th>Guhindura</th>
+                    </tr>
+                </thead>
+                <tbody id="settings-table-body">
+                    <!-- Imirongo y'ibicuruzwa izaza hano binyuze muri JS -->
+                </tbody>
+            </table>
+            <button class="add-btn" onclick="wongerehoIgicuruzwaGishya()">➕ Ongeraho Igicuruzwa Gishya</button>
+        </div>
+
+    </div>
+
+    <script>
+        // DATA BASE / MAINTENANCE TABLE (BIHURA N'IBICIRO BYAWE)
+        let ibicuruzwa = [
+            { name: "Premium Shoes", price: "25,000 RWF", cat: "all", icon: "👟" },
+            { name: "Official Trousers", price: "15,000 RWF", cat: "all", icon: "👖" },
+            { name: "Complete Cloths Set", price: "40,000 RWF", cat: "all", icon: "👔" },
+            { name: "Sewing Machine", price: "350,000 RWF", cat: "all", icon: "⚙️" },
+            { name: "Repair Machine Service", price: "12,000 RWF", cat: "all", icon: "🛠️" },
+            { name: "Selling Car (Toyota)", price: "8,500,000 RWF", cat: "seller", icon: "🚗" },
+            { name: "Sport Motorcycle", price: "1,600,000 RWF", cat: "seller", icon: "🏍️" },
+            { name: "Mountain Bicycle", price: "130,000 RWF", cat: "seller", icon: "🚲" }
+        ];
+
+        const whatsappNumber = "250795981988"; 
+        let isCeoActive = false;
+
+        function funguraCeoLogin() {
+            hishaPajiZose();
+            document.getElementById('login-screen').style.display = 'block';
+        }
+
+        function gendaKuriHome() {
+            hishaPajiZose();
+            if (isCeoActive) {
+                document.getElementById('ceo-screen').style.display = 'block';
+            } else {
+                document.getElementById('dealer-screen').style.display = 'block';
+            }
+        }
+
+        function verifyCeoPin() {
+            const pin = document.getElementById('pin-field').value;
+            if (pin === "9999") {
+                isCeoActive = true;
+                document.getElementById('nav-ceo-btn').style.display = 'none';
+                document.getElementById('nav-settings-btn').style.display = 'block';
+                gendaKuriHome();
+            } else {
